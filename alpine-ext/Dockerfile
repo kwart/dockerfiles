@@ -17,13 +17,14 @@
 #
 # Expected usage:
 # ===============
-# docker pull kwart/alpine-bash:3.2
-# docker run -it --rm kwart/alpine-bash:3.2
+# docker pull kwart/alpine-ext:3.2-bash
+# docker run -it --rm kwart/alpine-ext:3.2-bash
 
 FROM alpine:3.2
 
 MAINTAINER Josef Cacek <josef.cacek@gmail.com>
 
-RUN apk add --update bash && rm -rf /var/cache/apk/*
+RUN apk add --update bash \
+    && rm -rf /var/cache/apk/*
 
 CMD ["/bin/bash"]
