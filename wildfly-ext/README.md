@@ -6,11 +6,11 @@ This is an example Dockerfile with [WildFly application server](http://wildfly.o
 
 To boot in standalone mode
 
-    docker run -it kwart/wildfly
+    docker run -it kwart/wildfly-ext
 
 To boot in domain mode
 
-    docker run -it kwart/wildfly domain
+    docker run -it kwart/wildfly-ext domain
 
 ## Configuration
 
@@ -27,7 +27,7 @@ Other command arguments following the run mode are added to the command line.
 
 To run domain mode with Security Manager enabled and multicast address specified
 
-    docker run -it kwart/wildfly domain -secmgr -u 230.0.0.4
+    docker run -it kwart/wildfly-ext domain -secmgr -u 230.0.0.4
 
 Default Docker command for this image is the `"standalone"`.
 
@@ -35,7 +35,7 @@ Commands which doesn't start with one of the modes are executed directly.
 
 To start just a shell
 
-    docker run -it kwart/wildfly /bin/bash
+    docker run -it kwart/wildfly-ext /bin/bash
 
 ### Environment variables
 
@@ -52,7 +52,7 @@ To run the image with `standalone-full-ha.xml` profile and the `admin` managemen
         -e WILDFLY_BIND_ADDR=auto \
         -e WILDFLY_SERVER_CONFIG=standalone-full-ha.xml \
         -e WILDFLY_ADMIN_PASSWORD=pass.1234 \
-        jboss/wildfly
+        kwart/wildfly-ext
 
 The console output then starts with something like
 
@@ -80,9 +80,9 @@ This image extends the [`jboss/wildfly`](https://github.com/jboss-dockerfiles/wi
 
 ## Source
 
-The source is [available on GitHub](https://github.com/kwart/dockerfile-wildfly).
+The source is [available on GitHub](https://github.com/kwart/dockerfiles).
 
 ## Issues
 
-Please report any issues or file RFEs on [GitHub](https://github.com/kwart/dockerfile-wildfly/issues).
+Please report any issues or file RFEs on [GitHub](https://github.com/kwart/dockerfiles/issues).
 

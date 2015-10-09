@@ -5,8 +5,8 @@ Helper tools for my projects... I'm too lazy to install every piece of SW on all
 Usually, I put following lines to `~/.bash_aliases`
 
 ```bash
-alias travis='docker run -it --rm -v $PWD:/repo -v ~/.travis:/travis kwart/tools-in-docker'
-alias docker-scripts='docker run --rm -v $PWD:/repo -v /var/run/docker.sock:/var/run/docker.sock --entrypoint /usr/local/bin/docker-scripts kwart/tools-in-docker'
+alias travis='docker run -it --rm -v $PWD:/repo -v ~/.travis:/travis kwart/tools'
+alias docker-scripts='docker run --rm -v $PWD:/repo -v /var/run/docker.sock:/var/run/docker.sock --entrypoint /usr/local/bin/docker-scripts kwart/tools'
 ```
 
 ## Travis CLI
@@ -22,7 +22,7 @@ Primarily used to `travis setup releases`
 
 ```bash
 # Create a simple alias to run the in-docker travis client
-alias travis='docker run -it --rm -v $PWD:/repo -v ~/.travis:/travis kwart/tools-in-docker'
+alias travis='docker run -it --rm -v $PWD:/repo -v ~/.travis:/travis kwart/tools'
 
 # Create Travis configuration file
 cat << EOT >.travis.yml
@@ -45,7 +45,7 @@ Squashing docker images made easy. The [docker-scripts](https://github.com/goldm
 ### Usage
 
 ```
-$ alias docker-scripts='docker run --rm -v $PWD:/repo -v /var/run/docker.sock:/var/run/docker.sock --entrypoint /usr/local/bin/docker-scripts kwart/tools-in-docker'
+$ alias docker-scripts='docker run --rm -v $PWD:/repo -v /var/run/docker.sock:/var/run/docker.sock --entrypoint /usr/local/bin/docker-scripts kwart/tools'
 $ docker-scripts -c jboss/wildfly:latest
 511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158
  └─ 782cf93a8f16d3016dae352188cd5cfedb6a15c37d4dbd704399f02d1bb89dab [/bin/sh -c #(nop) MAINTAINER Lokesh Mandvekar <lsm5@fedoraproject.org> - ./buildcontainers.sh]
