@@ -17,14 +17,22 @@
 #
 # Expected usage:
 # ===============
-# docker pull kwart/alpine-ext:3.2-bash
-# docker run -it --rm kwart/alpine-ext:3.2-bash
+# docker pull kwart/alpine-ext:3.2-ssh
+# docker run -it --rm kwart/alpine-ext:3.2-ssh
 
 FROM alpine:3.2
 
-MAINTAINER Josef Cacek <josef.cacek@gmail.com>
+MAINTAINER Josef (kwart) Cacek <josef.cacek@gmail.com>
 
-RUN apk add --update bash \
+RUN apk add --update bash dropbear \
     && rm -rf /var/cache/apk/*
 
-CMD ["/bin/bash"]
+ENV DROPBEAR_CONF=/etc/dropbear
+
+COPY docker-entrypoint.sh /
+
+EXPOSE 22
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+CMD []
