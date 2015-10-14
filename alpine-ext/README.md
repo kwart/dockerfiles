@@ -9,11 +9,14 @@ Alpine Linux `3.2` with `bash` package installed and configured as CMD.
 
 
 ### 3.2-ssh
-Alpine Linux `3.2` with `bash` and `dropbear` packages installed.
+Alpine Linux `3.2` with `bash`, `dropbear` and `openssh` packages installed.
 
 The **[dropbear](https://matt.ucc.asn.au/dropbear/dropbear.html)** is a lightweight SSH server and client.
 
 The image uses a new `/docker-entrypoint.sh` script to configure and start the SSH server.
+
+The OpenSSH server is not started in the default configuration. The package is installed mainly to provide `scp` and `sftp-server`
+functionality to the `dropbear`.
 
 #### Environment variables
 The environment variables can be used to configure SSH server

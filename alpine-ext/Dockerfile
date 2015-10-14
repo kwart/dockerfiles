@@ -24,7 +24,9 @@ FROM alpine:3.2
 
 MAINTAINER Josef (kwart) Cacek <josef.cacek@gmail.com>
 
-RUN apk add --update bash dropbear \
+RUN apk add --update bash dropbear openssh \
+    && mkdir /usr/libexec \
+    && ln -s /usr/lib/ssh/sftp-server /usr/libexec/ \
     && rm -rf /var/cache/apk/*
 
 ENV DROPBEAR_CONF=/etc/dropbear
