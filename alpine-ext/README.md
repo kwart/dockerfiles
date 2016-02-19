@@ -4,12 +4,16 @@ Alpine Linux Docker image with additional stuff included
 
 ## Tags
 
-### 3.2-bash
-Alpine Linux `3.2` with `bash` package installed and configured as CMD.
+* 3.3-ssh
+* 3.2-ssh
+* 3.2-bash
+
+### *-bash tags
+Alpine Linux with `bash` package installed and configured as CMD.
 
 
-### 3.2-ssh
-Alpine Linux `3.2` with `bash`, `dropbear` and `openssh` packages installed.
+### *-ssh tags
+Alpine Linux with `bash`, `dropbear` and `openssh` packages installed.
 
 The **[dropbear](https://matt.ucc.asn.au/dropbear/dropbear.html)** is a lightweight SSH server and client.
 

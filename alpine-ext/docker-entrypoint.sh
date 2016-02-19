@@ -39,14 +39,14 @@ echo
 
 if [ $# -gt 0 ]; then
     echo "Running dropbear SSH server on background"
-    echo "dropbear -p ${SSH_PORT}"
-    dropbear -p ${SSH_PORT}
+    echo "dropbear -m -p ${SSH_PORT}"
+    dropbear -m -p ${SSH_PORT}
 
     echo
     echo "Executing command $@"
     exec "$@"
 else
     echo "Running dropbear SSH server on foreground"
-    echo "dropbear -p ${SSH_PORT} -E -F"
-    dropbear -p ${SSH_PORT} -E -F
+    echo "dropbear -m -p ${SSH_PORT} -E -F"
+    dropbear -m -p ${SSH_PORT} -E -F
 fi

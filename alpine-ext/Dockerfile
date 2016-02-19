@@ -9,18 +9,9 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-#
-#
-# This Dockerfile creates image based on official alpine linux docker image. 
-# It adds bash to the image and sets it as a default command.
-#
-#
-# Expected usage:
-# ===============
-# docker pull kwart/alpine-ext:3.2-ssh
-# docker run -it --rm kwart/alpine-ext:3.2-ssh
 
-FROM alpine:3.2
+
+FROM alpine:3.3
 
 MAINTAINER Josef (kwart) Cacek <josef.cacek@gmail.com>
 
