@@ -15,16 +15,26 @@ FROM alpine:3.3
 
 MAINTAINER Josef (kwart) Cacek <josef.cacek@gmail.com>
 
-RUN apk add --update bash dropbear openssh \
+ENV DROPBEAR_CONF=/etc/dropbear \
+    ALPINE_USER=alpine
+
+RUN echo "Installing APK packages" \
+    && apk add --update bash dropbear openssh sudo \
+    && echo "Configuring SSH" \
     && mkdir /usr/libexec \
     && ln -s /usr/lib/ssh/sftp-server /usr/libexec/ \
+    && echo "Adding user $ALPINE_USER in wheel group (with a NOPASSWD: entry in sudoers file)" \
+    && adduser -D $ALPINE_USER \
+    && adduser $ALPINE_USER wheel \
+    && echo '%wheel ALL=(ALL) NOPASSWD: ALL' >/etc/sudoers.d/wheel \
+    && echo "Cleaning APK cache" \
     && rm -rf /var/cache/apk/*
-
-ENV DROPBEAR_CONF=/etc/dropbear
 
 COPY docker-entrypoint.sh /
 
 EXPOSE 22
+
+USER alpine
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 

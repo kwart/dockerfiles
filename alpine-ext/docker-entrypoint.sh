@@ -1,6 +1,23 @@
 #!/bin/bash
 set -e
 
+changePassword() {
+    local PWUSER=$1
+    local PWPASS=$2
+    local PWFILE="/tmp/password.$PWUSER"
+    echo
+    if [ -z "$PWPASS" ]; then
+        echo "Generating $PWUSER's password"
+        PWPASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 12 | head -n 1)
+    fi;
+    echo "Storing $PWUSER's password into $PWFILE"
+    echo "$PWPASS" > "$PWFILE"
+    sudo chown "$PWUSER:$PWUSER" "$PWFILE"
+    sudo chmod 600 $PWFILE
+    echo "Changing $PWUSER's password"
+    echo "$PWUSER:$PWPASS" | sudo chpasswd
+}
+
 SSH_PORT=${SSH_PORT:-22}
 
 echo
@@ -14,24 +31,20 @@ if [ ! -d "${DROPBEAR_CONF}" ]; then
     echo
     echo "Configuring dropbear SSH server in folder ${DROPBEAR_CONF}" 
     
-    mkdir -p "${DROPBEAR_CONF}"
-    dropbearkey -t dss -f "${DROPBEAR_CONF}/dropbear_dss_host_key"
-    dropbearkey -t rsa -f "${DROPBEAR_CONF}/dropbear_rsa_host_key" -s 2048
-    dropbearkey -t ecdsa -f "${DROPBEAR_CONF}/dropbear_ecdsa_host_key"
+    sudo mkdir -p "${DROPBEAR_CONF}"
+    sudo dropbearkey -t dss -f "${DROPBEAR_CONF}/dropbear_dss_host_key"
+    sudo dropbearkey -t rsa -f "${DROPBEAR_CONF}/dropbear_rsa_host_key" -s 2048
+    sudo dropbearkey -t ecdsa -f "${DROPBEAR_CONF}/dropbear_ecdsa_host_key"
 
-    # set root password if needed
-    if [ -n "$ROOT_PASSWORD" ]; then
-        echo
-        echo "Changing root's password" 
-        echo "root:$ROOT_PASSWORD" | chpasswd
-    fi;
+    changePassword root $ROOT_PASSWORD
+    changePassword $ALPINE_USER ""
 
     # set root's authorized_keys
     if [ -n "$ROOT_AUTHORIZED_KEY" ]; then
         echo
         echo "Adding entry to /root/.ssh/authorized_keys" 
-        mkdir -p /root/.ssh
-        echo "$ROOT_AUTHORIZED_KEY" >> /root/.ssh/authorized_keys
+        sudo mkdir -p /root/.ssh
+        sudo sh -c 'echo "$ROOT_AUTHORIZED_KEY" >> /root/.ssh/authorized_keys'
     fi;
 fi
 
@@ -40,7 +53,7 @@ echo
 if [ $# -gt 0 ]; then
     echo "Running dropbear SSH server on background"
     echo "dropbear -m -p ${SSH_PORT}"
-    dropbear -m -p ${SSH_PORT}
+    sudo dropbear -m -p ${SSH_PORT}
 
     echo
     echo "Executing command $@"
@@ -48,5 +61,5 @@ if [ $# -gt 0 ]; then
 else
     echo "Running dropbear SSH server on foreground"
     echo "dropbear -m -p ${SSH_PORT} -E -F"
-    dropbear -m -p ${SSH_PORT} -E -F
+    sudo dropbear -m -p ${SSH_PORT} -E -F
 fi

@@ -4,6 +4,7 @@ Alpine Linux Docker image with additional stuff included
 
 ## Tags
 
+* 3.3-ssh-sudo
 * 3.3-ssh
 * 3.2-ssh
 * 3.2-bash
@@ -21,6 +22,11 @@ The image uses a new `/docker-entrypoint.sh` script to configure and start the S
 
 The OpenSSH server is not started in the default configuration. The package is installed mainly to provide `scp` and `sftp-server`
 functionality to the `dropbear`.
+
+### *-ssh-sudo tags
+Similar to *-ssh tags, it adds the `sudo` package and also `alpine` user which has entry in `sudoers` file.
+
+Password for the user  is generated and stored in `/tmp/password.alpine`. The root's password is also stored on filesystem (`/tmp/password.root`) and in case it's not provided by environment variable it's newly generated.
 
 #### Environment variables
 The environment variables can be used to configure SSH server
