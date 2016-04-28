@@ -24,8 +24,14 @@ echo
 echo "Starting alpine linux with dropbear SSH server"
 echo "=============================================="
 echo "SSH_PORT                ${SSH_PORT}"
-echo "ROOT_PASSWORD           ${ROOT_PASSWORD:+*****}" 
-echo "ROOT_AUTHORIZED_KEY     ${ROOT_AUTHORIZED_KEY:+${ROOT_AUTHORIZED_KEY:0:20}}" 
+echo
+echo "User 'root' config"
+echo "ROOT_PASSWORD           ${ROOT_PASSWORD:+*****}"
+echo "ROOT_AUTHORIZED_KEY     ${ROOT_AUTHORIZED_KEY:+${ROOT_AUTHORIZED_KEY:0:20}}"
+echo
+echo "User '$ALPINE_USER' config"
+echo "USER_PASSWORD           ${USER_PASSWORD:+*****}"
+echo "USER_AUTHORIZED_KEY     ${USER_AUTHORIZED_KEY:+${USER_AUTHORIZED_KEY:0:20}}"
 
 if [ ! -d "${DROPBEAR_CONF}" ]; then
     echo
@@ -37,15 +43,23 @@ if [ ! -d "${DROPBEAR_CONF}" ]; then
     sudo dropbearkey -t ecdsa -f "${DROPBEAR_CONF}/dropbear_ecdsa_host_key"
 
     changePassword root $ROOT_PASSWORD
-    changePassword $ALPINE_USER ""
+    changePassword $ALPINE_USER $USER_PASSWORD
 
     # set root's authorized_keys
     if [ -n "$ROOT_AUTHORIZED_KEY" ]; then
         echo
-        echo "Adding entry to /root/.ssh/authorized_keys" 
+        echo "Adding entry to /root/.ssh/authorized_keys"
         sudo mkdir -p /root/.ssh
-        sudo sh -c 'echo "$ROOT_AUTHORIZED_KEY" >> /root/.ssh/authorized_keys'
-    fi;
+        sudo -E sh -c 'echo "$ROOT_AUTHORIZED_KEY" | tee /root/.ssh/authorized_keys'
+    fi
+
+    # set user's authorized_keys
+    if [ -n "$USER_AUTHORIZED_KEY" ]; then
+        echo
+        echo "Adding entry to /home/$ALPINE_USER/.ssh/authorized_keys"
+        mkdir -p /home/$ALPINE_USER/.ssh
+        echo "$USER_AUTHORIZED_KEY" | tee /home/$ALPINE_USER/.ssh/authorized_keys
+    fi
 fi
 
 echo

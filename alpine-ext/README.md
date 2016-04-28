@@ -23,11 +23,6 @@ The image uses a new `/docker-entrypoint.sh` script to configure and start the S
 The OpenSSH server is not started in the default configuration. The package is installed mainly to provide `scp` and `sftp-server`
 functionality to the `dropbear`.
 
-### *-ssh-sudo tags
-Similar to *-ssh tags, it adds the `sudo` package and also `alpine` user which has entry in `sudoers` file.
-
-Password for the user  is generated and stored in `/tmp/password.alpine`. The root's password is also stored on filesystem (`/tmp/password.root`) and in case it's not provided by environment variable it's newly generated.
-
 #### Environment variables
 The environment variables can be used to configure SSH server
 
@@ -52,3 +47,16 @@ The `dropbear` SSH server will run on background and `bash` on foreground
 ```bash
 docker run -e "ROOT_AUTHORIZED_KEY=`cat ~/.ssh/id_rsa.pub`" -it kwart/alpine-ext:3.2-ssh /bin/bash
 ```
+
+### *-ssh-sudo tags
+Similar to *-ssh tags, it adds the `sudo` package and also `alpine` user which has entry in `sudoers` file.
+
+Password for the user  is generated and stored in `/tmp/password.alpine`. The root's password is also stored on filesystem (`/tmp/password.root`) and in case it's not provided by environment variable it's newly generated.
+
+#### Environment variables
+The ones included in *-ssh tag plus following
+
+| Variable      | Default | Description |
+| ------------- | ------- |---------|
+| USER_PASSWORD |         | alpine user's password |
+| USER_AUTHORIZED_KEY |   | entry to be added to /home/alpine/.ssh/authorized_keys |

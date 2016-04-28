@@ -23,6 +23,7 @@ RUN echo "Installing APK packages" \
     && echo "Configuring SSH" \
     && mkdir /usr/libexec \
     && ln -s /usr/lib/ssh/sftp-server /usr/libexec/ \
+    && touch /var/log/lastlog \
     && echo "Adding user $ALPINE_USER in wheel group (with a NOPASSWD: entry in sudoers file)" \
     && adduser -D $ALPINE_USER \
     && adduser $ALPINE_USER wheel \
