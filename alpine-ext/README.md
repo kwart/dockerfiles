@@ -4,6 +4,7 @@ Alpine Linux Docker image with additional stuff included
 
 ## Tags
 
+* 1.0-rich (based on alpine:3.3)
 * 3.3-ssh-sudo
 * 3.3-ssh
 * 3.2-ssh
@@ -32,22 +33,6 @@ The environment variables can be used to configure SSH server
 | ROOT_PASSWORD |         | root's password |
 | ROOT_AUTHORIZED_KEY |   | entry to be added to /root/.ssh/authorized_keys |
 
-#### Sampe usage
-
-Start the container with root's password configured to `"alpine"`.
-The dropbear SSH server will run on foreground.
-
-```bash
-docker run -e "ROOT_PASSWORD=alpine" -it kwart/alpine-ext:3.2-ssh
-```
-
-Start the container with SSH private key authentication configured.
-The `dropbear` SSH server will run on background and `bash` on foreground
-
-```bash
-docker run -e "ROOT_AUTHORIZED_KEY=`cat ~/.ssh/id_rsa.pub`" -it kwart/alpine-ext:3.2-ssh /bin/bash
-```
-
 ### *-ssh-sudo tags
 Similar to *-ssh tags, it adds the `sudo` package and also `alpine` user which has entry in `sudoers` file.
 
@@ -60,3 +45,25 @@ The ones included in *-ssh tag plus following
 | ------------- | ------- |---------|
 | USER_PASSWORD |         | alpine user's password |
 | USER_AUTHORIZED_KEY |   | entry to be added to /home/alpine/.ssh/authorized_keys |
+
+### *-rich tags
+Numbering of this tags doesn't copy the alpine numbering! (e.g. `rich-1.0` is based on `alpine:3.3`)
+
+This image adds more features to ones provided by `*-ssh-sudo`. New package(s):
+* iptables (from rich-1.0)
+
+## Sample usage
+
+Start the container with root's password configured to `"alpine"`.
+The dropbear SSH server will run on foreground.
+
+```bash
+docker run -e "ROOT_PASSWORD=alpine" -it kwart/alpine-ext:3.3-ssh
+```
+
+Start the container with SSH private key authentication configured.
+The `dropbear` SSH server will run on background and `bash` on foreground
+
+```bash
+docker run -e "ROOT_AUTHORIZED_KEY=`cat ~/.ssh/id_rsa.pub`" -it kwart/alpine-ext:3.3-ssh /bin/bash
+```

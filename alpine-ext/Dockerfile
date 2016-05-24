@@ -19,7 +19,7 @@ ENV DROPBEAR_CONF=/etc/dropbear \
     ALPINE_USER=alpine
 
 RUN echo "Installing APK packages" \
-    && apk add --update bash dropbear openssh sudo \
+    && apk add --update bash dropbear openssh sudo iptables \
     && echo "Configuring SSH" \
     && mkdir /usr/libexec \
     && ln -s /usr/lib/ssh/sftp-server /usr/libexec/ \
