@@ -5,13 +5,15 @@ Helper tools for my projects... I'm too lazy to install every piece of SW on all
 Usually, I put following lines to `~/.bash_aliases`
 
 ```bash
-alias travis='docker run -it --rm -v $PWD:/repo -v ~/.travis:/travis kwart/tools'
-alias docker-scripts='docker run --rm -v $PWD:/repo -v /var/run/docker.sock:/var/run/docker.sock --entrypoint /usr/local/bin/docker-scripts kwart/tools'
+alias travis='docker run -it --rm -v $PWD:/repo -v ~/.travis:/root/.travis kwart/tools /usr/bin/travis'
+alias docker-scripts='docker run --rm -v $PWD:/repo -v /var/run/docker.sock:/var/run/docker.sock /usr/bin/docker-scripts kwart/tools'
 ```
 
 ## Travis CLI
 
-Based on André Dumas work - https://github.com/andredumas/docker-travis-ci-cli
+Inspired by versions from [André Dumas](https://github.com/andredumas/docker-travis-ci-cli)
+and [James Pamplin](https://github.com/jamespamplin/docker-alpine-travis-cli).
+
 
 The image contains [travis ci client](http://blog.travis-ci.com/2013-01-14-new-client/) - following 
 [installation instructions](https://github.com/travis-ci/travis.rb#installation).
@@ -22,7 +24,7 @@ Primarily used to `travis setup releases`
 
 ```bash
 # Create a simple alias to run the in-docker travis client
-alias travis='docker run -it --rm -v $PWD:/repo -v ~/.travis:/travis kwart/tools'
+alias travis='docker run -it --rm -v $PWD:/repo -v ~/.travis:/root/.travis kwart/tools /usr/bin/travis'
 
 # Create Travis configuration file
 cat << EOT >.travis.yml
@@ -45,7 +47,7 @@ Squashing docker images made easy. The [docker-scripts](https://github.com/goldm
 ### Usage
 
 ```
-$ alias docker-scripts='docker run --rm -v $PWD:/repo -v /var/run/docker.sock:/var/run/docker.sock --entrypoint /usr/local/bin/docker-scripts kwart/tools'
+$ alias docker-scripts='docker run --rm -v $PWD:/repo -v /var/run/docker.sock:/var/run/docker.sock /usr/bin/docker-scripts kwart/tools'
 $ docker-scripts -c jboss/wildfly:latest
 511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158
  └─ 782cf93a8f16d3016dae352188cd5cfedb6a15c37d4dbd704399f02d1bb89dab [/bin/sh -c #(nop) MAINTAINER Lokesh Mandvekar <lsm5@fedoraproject.org> - ./buildcontainers.sh]

@@ -16,22 +16,21 @@
 # limitations under the License.
 #
 
-FROM ubuntu:14.04
+FROM alpine:3.4
 MAINTAINER Josef Cacek
 
-RUN apt-get update \
-    && apt-get -y install ruby1.9.3 build-essential git python-pip \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/ \
+RUN apk add -U --no-cache bash ruby ruby-io-console ruby-json git py-pip \
+    && apk add -U --no-cache --virtual build_deps \
+       build-base ruby-dev libc-dev libffi-dev linux-headers \
     && gem install travis --no-rdoc --no-ri \
-    && pip install docker-scripts
+    && pip install docker-scripts \
+    && apk del build_deps
 
 # Location where travis config stored
-ENV TRAVIS_CONFIG_PATH /travis
-VOLUME /travis
+VOLUME /root/.travis
 
 # Generally the current working dir will be used as the repo volume
 VOLUME /repo
 WORKDIR /repo
 
-ENTRYPOINT ["/usr/local/bin/travis"]
+CMD ["/bin/bash"]
