@@ -4,6 +4,7 @@ Alpine Linux Docker image with additional stuff included
 
 ## Tags
 
+* 1.1-rich (based on alpine:3.6)
 * 1.0-rich (based on alpine:3.3)
 * 3.3-ssh-sudo
 * 3.3-ssh
@@ -51,6 +52,7 @@ Numbering of this tags doesn't copy the alpine numbering! (e.g. `rich-1.0` is ba
 
 This image adds more features to ones provided by `*-ssh-sudo`. New package(s):
 * iptables (from rich-1.0)
+* openjdk8 (from rich-1.1)
 
 ## Sample usage
 

@@ -11,7 +11,7 @@
 #  limitations under the License.
 
 
-FROM alpine:3.3
+FROM alpine:3.6
 
 MAINTAINER Josef (kwart) Cacek <josef.cacek@gmail.com>
 
@@ -19,7 +19,7 @@ ENV DROPBEAR_CONF=/etc/dropbear \
     ALPINE_USER=alpine
 
 RUN echo "Installing APK packages" \
-    && apk add --update bash dropbear openssh sudo iptables \
+    && apk add --update bash dropbear openssh sudo iptables openjdk8 \
     && echo "Configuring SSH" \
     && mkdir /usr/libexec \
     && ln -s /usr/lib/ssh/sftp-server /usr/libexec/ \
