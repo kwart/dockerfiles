@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-FROM alpine:3.4
+FROM alpine:3.6
 MAINTAINER Josef Cacek
 
 RUN apk add -U --no-cache bash ruby ruby-io-console ruby-json git py-pip \
