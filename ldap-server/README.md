@@ -4,6 +4,7 @@ Alpine Linux Docker image with Apache DS based LDAP server
 
 ## Tags
 
+* 2017-09-04
 * 2016-10-04
 
 ## How to run it
@@ -11,7 +12,7 @@ Alpine Linux Docker image with Apache DS based LDAP server
 ### Default LDIF
 
 ```bash
-docker run -it --rm -p 10389:10389 kwart/ldap-server 
+docker run -it --rm -p 10389:10389 -p 10636:10636 kwart/ldap-server 
 ```
 ### Custom LDIF
 
