@@ -1,0 +1,11 @@
+alias ll='ls -alF'
+
+function hz() {
+  if [ ! $# -eq 2 ]; then
+    echo "Provide docker host public IP address as the first argument and public IP as the second (one of 5555, 5556)"
+    return 2
+  fi
+  groovysh -cp hazelcast-all-3.9.jar $JAVA_OPTS -Dhazelcast.public.ip=$1 -Dhazelcast.port=$2 -e "System.setSecurityManager(null); import com.hazelcast.core.*; import com.hazelcast.client.*; hz = Hazelcast.newHazelcastInstance();"
+}
+
+
