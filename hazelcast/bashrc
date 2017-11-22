@@ -1,0 +1,17 @@
+alias ll='ls -alF'
+
+function hz() {
+  local HZ_CMD="";
+  if [ ! -z "$1" ]; then
+    HZ_CMD="$1"
+  fi
+  groovysh -cp $HZ_HOME/hazelcast-all-${HZ_VERSION}.jar $JAVA_OPTS -e "System.setSecurityManager(null); import com.hazelcast.core.*; import com.hazelcast.client.*; $HZ_CMD"
+}
+
+function hzMember() {
+  hz "hz = Hazelcast.newHazelcastInstance();"
+}
+
+function hzClient() {
+  hz "hz = HazelcastClient.newHazelcastClient();"
+}
