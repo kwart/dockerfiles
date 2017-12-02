@@ -1,42 +1,21 @@
-#  Licensed under the Apache License, Version 2.0 (the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
-#
-#  http://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
-
-
-FROM alpine:3.6
+FROM alpine:3.7
 
 MAINTAINER Josef (kwart) Cacek <josef.cacek@gmail.com>
 
-ENV DROPBEAR_CONF=/etc/dropbear \
-    ALPINE_USER=alpine
+ENV WILDFLY_VERSION=11.0.0.Final
+
+ADD http://download.jboss.org/wildfly/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.zip /opt/
 
 RUN echo "Installing APK packages" \
-    && apk add --update bash dropbear openssh sudo iptables openjdk8 \
-    && echo "Configuring SSH" \
-    && mkdir /usr/libexec \
-    && ln -s /usr/lib/ssh/sftp-server /usr/libexec/ \
-    && touch /var/log/lastlog \
-    && echo "Adding user $ALPINE_USER in wheel group (with a NOPASSWD: entry in sudoers file)" \
-    && adduser -D $ALPINE_USER \
-    && adduser $ALPINE_USER wheel \
-    && echo '%wheel ALL=(ALL) NOPASSWD: ALL' >/etc/sudoers.d/wheel \
+    && apk add --update bash vim nano gawk openjdk8 \
+    && echo "Installing WildFly" \
+    && unzip -q /opt/wildfly-$WILDFLY_VERSION.zip -d /opt \
+    && mv /opt/wildfly-$WILDFLY_VERSION /opt/wildfly \
     && echo "Cleaning APK cache" \
     && rm -rf /var/cache/apk/*
 
-COPY docker-entrypoint.sh /
+COPY bashrc /root/.bashrc
 
-EXPOSE 22
+WORKDIR /opt
 
-USER alpine
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
-CMD []
+CMD ["/bin/bash"]

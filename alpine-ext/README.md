@@ -4,6 +4,7 @@ Alpine Linux Docker image with additional stuff included
 
 ## Tags
 
+* wildfly-11
 * 1.1-rich (based on alpine:3.6)
 * 1.0-rich (based on alpine:3.3)
 * 3.3-ssh-sudo
