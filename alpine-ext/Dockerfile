@@ -10,6 +10,7 @@ RUN echo "Installing APK packages" \
     && apk add --update bash vim nano gawk openjdk8 \
     && echo "Installing WildFly" \
     && unzip -q /opt/wildfly-$WILDFLY_VERSION.zip -d /opt \
+    && rm /opt/wildfly-$WILDFLY_VERSION.zip \
     && mv /opt/wildfly-$WILDFLY_VERSION /opt/wildfly \
     && echo "Cleaning APK cache" \
     && rm -rf /var/cache/apk/*
